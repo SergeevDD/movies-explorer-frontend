@@ -1,0 +1,125 @@
+.card {
+  font-family: 'Inter', 'Arial', sans-serif;
+  position: relative;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 170px 1fr;
+  row-gap: 10px;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.card__image {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 3%;
+  grid-column: 1 / 3;
+}
+
+.card__name {
+  color: #fff;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__duration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  border-radius: 3px;
+  background-color: #2F2F2F;
+  margin: 0;
+  color: #8b8b8b;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 10px;
+  min-height: 18px;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.card__btn {
+  background-color: transparent;
+  padding: 0;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  min-width: 21px;
+  min-height: 21px;
+  background-repeat: no-repeat;
+  transition: opacity .3s ease-in;
+  cursor: pointer;
+}
+
+.card__btn:hover {
+  opacity: .8;
+}
+
+.card__btn_delete {
+  background-image: url(../../images/logo/delete.svg);
+}
+
+.card__btn_saved {
+  background-image: url(../../images/logo/incollection.svg);
+}
+
+.card__btn_save {
+min-width: 72px;
+background-image: url(../../images/logo/savefilm.svg);
+}
+
+.card-action:hover {
+  opacity: .6;
+}
+
+@media screen and (min-width:600px) {
+  .card {
+    max-width: 339px;
+    row-gap: 25px;
+    grid-template-rows: 190px 1fr;
+  }
+
+  .card__name {
+    font-size: 13px;
+  }
+
+  .card__duration {
+    min-width: 52px;
+    margin-left: 10px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .card__btn {
+    top:16px;
+    right: 14px;;
+  }
+
+}
+
+@media screen and (min-width:900px) {
+  .card {
+    max-width: 360px;
+    row-gap: 14px;
+    grid-template-rows: 201px 1fr;
+  }
+
+  .card__name {
+    margin-left: 14px;
+  }
+
+  .card__duration {
+    min-width: 52px;
+    justify-self: center;
+  }
+}

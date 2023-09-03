@@ -1,0 +1,126 @@
+.tech {
+  background-color: #272727;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', 'Arial', sans-serif;
+  padding: 68px 18px 70px 18px;
+}
+
+.tech__title {
+  margin: 0;
+  border-bottom: 1px solid #fff;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -.72px;
+  color: #fff;
+  padding-bottom: 28px;
+  margin-bottom: 60px;
+}
+
+.tech__subtitle {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -1.2px;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 14px;
+}
+
+.tech__paragraph {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -.44px;
+  text-align: center;
+  margin-bottom: 50px;
+  min-width: 284px;
+}
+
+.tech__list {
+  padding: 0;
+  margin: 0 auto;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 180px;
+  gap: 10px;
+}
+
+.tech__name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  min-width: 84px;
+  min-height: 57px;
+  border-radius: 10px;
+  background-color: #303030;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -.48px;
+  ;
+}
+
+@media screen and (min-width: 600px) {
+  .tech {
+    padding: 87px 50px 90px 50px;
+  }
+
+  .tech__title {
+    font-size: 22px;
+    letter-spacing: -.88px;
+    margin-bottom: 80px;
+    padding-bottom: 23px;
+  }
+
+  .tech__subtitle {
+    font-size: 50px;
+    line-height: 58px;
+    letter-spacing: -2px;
+    margin-bottom: 22px;
+  }
+
+  .tech__paragraph {
+    max-width: 460px;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -.48px;
+    margin: 0 auto 83px auto;
+  }
+
+  .tech__list {
+    max-width: none;
+    justify-content: center;
+  }
+
+}
+
+@media screen and (min-width: 900px) {
+  .tech {
+    padding: 100px 70px 100px 70px;
+  }
+
+  .tech__name {
+    min-width: 90px;
+    min-height: 60px;
+    font-size: 14px;
+    left:  -.56px;
+  }
+
+  .tech__title {
+    margin-bottom: 90px;
+  }
+
+  .tech__paragraph {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -.56px;
+    margin-bottom: 100px;
+  }
+
+  .tech__subtitle {
+    margin-bottom: 26px;
+  }
+}

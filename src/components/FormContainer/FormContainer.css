@@ -1,0 +1,161 @@
+.form-container {
+  font-family: 'Inter', 'Arial', sans-serif;
+  padding: 56px 30px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.form-container__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 396px;
+}
+
+.form-container__title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #fff;
+  margin: 50px 0 0 0;
+  text-align: center;
+}
+
+.form-container__text {
+  font-size: 12px;
+  font-weight: 400;
+  color: #8b8b8b;
+}
+
+.form-container__link {
+  color: #4285F4;
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 7px;
+  text-decoration: none;
+}
+
+.form-container__link:hover {
+  opacity: .7;
+}
+
+.form-container__logo {
+  height: 38px;
+  width: 38px;
+  margin: 0 auto;
+}
+
+.form-container__logo:hover {
+  opacity: .7;
+}
+
+.form-container__input-field {
+  padding: 0;
+  margin: 80px 0 0 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  min-height: 266px;
+}
+
+.form-container__input-name {
+  color: #8b8b8b;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.form-container__error {
+  min-height: 20px;
+  color: #EE3465;
+  font-size: 10px;
+  font-weight: 400;
+  grid-column: 1 / 3;
+}
+
+.form-container__input {
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 10px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  background-color: #2f2f2f;
+  border-radius: 8px;
+  min-height: 46px;
+  padding: 0 15px 0 15px;
+}
+
+.form-container__input_type_error {
+  color: #EE3465;
+}
+
+.form-container__button {
+  color: #fff;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 3px;
+  background-color: #4285F4;
+  min-height: 45px;
+  min-width: 260px;
+  padding: 0;
+  margin-bottom: 14px;
+  margin-top: 157px;
+}
+
+.form-container__button:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+@media screen and (min-width:600px) {
+
+  .form-container__button {
+    font-size: 14px;
+    margin-bottom: 16px;
+    margin-top: 157px;
+  }
+
+  .form-container__text {
+    font-size: 14px;
+  }
+
+  .form-container__link {
+    font-size: 14px;
+  }
+
+  .form-container__logo {
+    margin: 0;
+  }
+
+  .form-container__title {
+    text-align:initial;
+  }
+
+}
+@media screen and (min-width:600px) {
+  .form-container {
+    padding-top: 232px;
+  }
+  .form-container__title {
+    margin-top: 40px;
+  }
+  .form-container__input-field{
+    margin-top: 42px;
+  }
+
+  .form-container__button {
+    margin-top: 68px;
+  }
+
+}
+@media screen and (min-width:900px) {
+
+.form-container__button {
+  margin-top: 69px;
+}
+}
