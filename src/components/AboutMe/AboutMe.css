@@ -1,0 +1,171 @@
+.student {
+  font-family: 'Inter', 'Arial', sans-serif;
+  padding: 70px 14px 70px 14px;
+  color: #fff;
+}
+
+.student__card {
+  display: grid;
+  grid-template-areas:
+    "photo"
+    "name"
+    "about"
+    "description"
+    "link";
+  grid-template-columns: repeat(auto-fit, minmax(292px, 1fr));
+  row-gap: 20px;
+}
+
+.student__title {
+  margin: 0;
+  border-bottom: 1px solid #fff;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -.72px;
+  color: #fff;
+  padding-bottom: 28px;
+  margin-bottom: 60px;
+}
+
+.student__name {
+  grid-area: name;
+  margin: 0;
+  margin-top: 19px;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -1.2px;
+}
+
+.student__about {
+  grid-area: about;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.student__paragraph {
+  grid-area: description;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.student__link {
+  grid-area: link;
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding-top: 20px;
+}
+
+.student__link:hover {
+  opacity: .7;
+}
+
+.student__photo {
+  grid-area: photo;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 350px;
+  justify-self: center;
+  max-height: 352px;
+}
+
+@media screen and (min-width: 600px) {
+  .student{
+    padding: 90px 50px 76px 50px;
+  }
+
+  .student__title {
+    padding-bottom: 23px;
+    margin-bottom: 66px;
+    font-size: 22px;
+    letter-spacing: -.88px;
+  }
+
+  .student__card {
+    grid-template-areas:
+      "name photo"
+      "about photo"
+      "description photo"
+      "link photo";
+    grid-template-rows: repeat(auto-fill, minmax(20px,36px));
+    column-gap: 49px;
+    row-gap: 0px;
+  }
+
+  .student__name {
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: -1.6px;
+    margin-top: 0;
+  }
+
+  .student__about {
+    font-size: 12px;
+    line-height: 18px;
+    align-self: center;
+  }
+
+  .student__paragraph {
+    padding-top: 0px;
+    font-size: 12px;
+    line-height: 18px;
+    min-width: 355px;
+  }
+
+  .student__link {
+    align-self: center;
+    padding-top: 30px;
+  }
+
+  .student__photo {
+    max-width: 255px;
+    max-height: 307px;
+    justify-self: end;
+  }
+
+}
+
+@media screen and (min-width: 900px) {
+  .student{
+    padding: 110px 70px 100px 70px;
+  }
+
+  .student__card {
+    row-gap: 18px;
+    grid-template-rows: auto
+  }
+
+  .student__name {
+    font-size: 50px;
+    line-height: 58px;
+    letter-spacing: -2px;
+  }
+
+  .student__about {
+    font-size: 18px;
+    line-height: 20px;
+    align-self: auto;
+  }
+
+  .student__paragraph {
+    padding-top: 8px;
+    font-size: 14px;
+    line-height: 22px;
+    width: 590px;
+  }
+
+  .student__photo {
+    max-width: 270px;
+    max-height: 327px;
+  }
+
+  .student__link {
+    padding-top: 81px;
+  }
+
+}

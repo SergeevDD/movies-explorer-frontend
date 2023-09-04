@@ -1,0 +1,160 @@
+.about {
+  font-family: 'Inter', 'Arial', sans-serif;
+  padding: 73px 18px 69px 18px;
+}
+
+.about__title {
+  margin: 0;
+  border-bottom: 1px solid #DADADA;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -.72px;
+  color: #fff;
+  padding-bottom: 28px;
+  margin-bottom: 60px;
+
+}
+
+.about__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 60px;
+}
+
+.about__subtitle {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -.72px;
+  margin: 0;
+  margin-bottom: 16px;
+  max-width: 284px;
+}
+
+.about__paragraph {
+  color: #fff;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16px;
+  margin-top: 16px;
+}
+
+.about__table {
+  margin-top: 60px;
+  width: 100%;
+}
+
+.about__heading {
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  background-color: #303030;
+}
+
+.about__heading_green {
+  color: #000;
+  background-color: #3DDC84;
+  width: 100px;
+  height: 36px;
+}
+
+.about__text {
+  color: #A0A0A0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  padding-top: 10px;
+}
+
+@media screen and (min-width: 600px) {
+  .about {
+    padding-top: 90px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 90px;
+  }
+
+  .about__table {
+    margin-top: 90px;
+  }
+
+  .about__list {
+    flex-direction: row;
+    column-gap: 39px;
+  }
+
+  .about__title {
+    font-size: 22px;
+    letter-spacing: -.88px;
+    margin-bottom: 70px;
+    min-width: 319px;
+  }
+
+  .about__subtitle {
+    font-size: 20px;
+    letter-spacing: -.8px;
+    max-width: 296px;
+
+  }
+
+  .about__paragraph {
+    font-size: 12px;
+    line-height: 18px;
+    margin-top: 22px;
+  }
+
+  .about__heading {
+    font-size: 14px;
+  }
+
+  .about__text {
+    font-size: 14px;
+    line-height: 17px;
+    padding-top: 14px;
+  }
+
+  .about__heading_green {
+    width: 140px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .about {
+    padding-top: 110px;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-bottom: 110px;
+  }
+  .about__title {
+    margin-bottom: 60px;
+  }
+
+  .about__table {
+    margin-top: 110px;
+  }
+
+  .about__subtitle {
+    max-width: 370px;
+  }
+
+  .about__paragraph {
+    margin-top: 26px;
+    font-size: 14px;
+  }
+
+  .about__list {
+    margin-top: 70px;
+    column-gap: 40px;
+  }
+
+  .about__heading_green {
+    width: 228px;
+  }
+}
