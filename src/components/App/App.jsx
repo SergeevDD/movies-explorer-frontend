@@ -24,6 +24,7 @@ function App() {
     <>
       <NavState>
         {renderHeader(where) && < Header loggedIn={isLoggedIn} />}
+        <main>
         <Routes>
           <Route exact path="/" element={<Main />} />
           <Route path="/movies" element={<Movies />} />
@@ -33,7 +34,9 @@ function App() {
           <Route path="/sign-in" element={<Login />} />
           <Route path='/404' element={<NotFound />} />
           <Route path='*' element={<NotFound />} />
-        </Routes></NavState>
+        </Routes>
+        </main>
+      </NavState>
       {renderFooter(where) && <Footer />}
     </>
   );

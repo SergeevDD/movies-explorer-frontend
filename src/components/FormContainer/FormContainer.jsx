@@ -1,7 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import logo from "../../images/logo/logo.svg"
 
-function FormContainer({ onSubmit, children }) {
+
+function FormContainer({ onSubmit, children, ...props }) {
+  const navigate = useNavigate();
+
+  function login() {
+    navigate('/sign-in')
+  }
+  function register() {
+    navigate('/sign-up')
+  }
+const location = useLocation().pathname === '/sign-up';
+
   return (
     <section
       className="form-container"
@@ -13,21 +24,22 @@ function FormContainer({ onSubmit, children }) {
         noValidate
       >
         <Link to="/" className='form-container__logo'>
-        <img
-          src={logo}
-          alt="логотип"
-        />
-      </Link>
-      <h2 className="form-container__title">{true ? 'Добро пожаловать!' : 'Рады видеть!'}</h2>
+          <img
+            src={logo}
+            alt="логотип"
+          />
+        </Link>
+        <h2 className="form-container__title">{location ? 'Добро пожаловать!' : 'Рады видеть!'}</h2>
         {children}
       </form>
       <span className="form-container__text">
         {
-          `${true ? 'Уже ' : 'Ещё не '}зарегистрированы?`
+          `${location ? 'Уже ' : 'Ещё не '}зарегистрированы?`
         }
-      <Link className="form-container__link">
-        {true ? 'Войти' : 'Регистрация'}
-      </Link>
+        <Link to={location ? '/sign-in' : '/sign-up'}
+        className="form-container__link">
+          {location ? 'Войти' : 'Регистрация'}
+        </Link>
       </span>
 
     </section>

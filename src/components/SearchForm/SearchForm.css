@@ -9,7 +9,7 @@
   display: grid;
   column-gap: 10px;
   row-gap: 47px;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #424242;
   grid-template-columns: 1fr 44px;
   padding-bottom: 40px;
 }
@@ -34,6 +34,7 @@
   height: 44px;
   border: none;
   padding: 0;
+  cursor: pointer;
 }
 
 .search__button:hover {

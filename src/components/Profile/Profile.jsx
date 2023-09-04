@@ -1,7 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Profile() {
+  const navigate = useNavigate();
+
+  function logout() {
+    navigate('/');
+  }
 
   const [isEdit, setIsEdit] = useState(false)
+
   return (
     <section className="profile">
       <h2 className="profile__title">{`Привет, ${'Виталий!'}`}</h2>
@@ -18,7 +26,7 @@ function Profile() {
               required
               minLength="2"
               maxLength="40"
-              defaultValue={'Виталий'}
+              placeholder="Виталий"
             />
 
           </label>
@@ -33,7 +41,7 @@ function Profile() {
               className="profile__input"
               required minLength="2"
               maxLength="200"
-              defaultValue={'pochta@yandex.ru'}
+              placeholder="pochta@yandex.ru"
             />
 
           </label>
@@ -55,18 +63,23 @@ function Profile() {
             >
               Сохранить
             </button></>)}
-          {!isEdit && (<><button
-            type="submit"
-            className={`profile__button `}
-            onClick={() => setIsEdit(true)}
-          >
-            Редактировать
-          </button><button
-            type="submit"
-            className={`profile__button profile__button-exit`}
-          >
-              Выйти из аккаунта
-            </button></>)}
+          {!isEdit &&
+            (<>
+              <button
+                type="submit"
+                className={`profile__button `}
+                onClick={() => setIsEdit(true)}
+                navigate
+              >
+                Редактировать
+              </button>
+              <button
+                type="submit"
+                className={`profile__button profile__button-exit`}
+                onClick={logout}
+              >
+                Выйти из аккаунта
+              </button></>)}
         </div>
       </form>
     </section>

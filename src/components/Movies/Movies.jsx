@@ -6,7 +6,7 @@ function Movies() {
   return (
     <section>
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList store={true} />
     </section>
   );
 }

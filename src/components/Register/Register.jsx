@@ -18,6 +18,7 @@ function Register() {
             id="input-name"
             className="form-container__input"
             required
+            placeholder="Виталий"
             minLength="2"
             maxLength="30"
           />
@@ -36,6 +37,7 @@ function Register() {
             name="email"
             id="input-mail"
             className="form-container__input"
+            placeholder="pochta@yandex.ru"
             required
           />
           <span
@@ -52,7 +54,9 @@ function Register() {
             name="password"
             id="input-pass"
             className="form-container__input"
+            placeholder="Введите пароль"
             required
+            minLength="2"
           />
           <span
             className="form-container__error">

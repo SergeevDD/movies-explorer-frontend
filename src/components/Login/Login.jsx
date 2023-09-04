@@ -17,6 +17,7 @@ function Login() {
           name="email"
           id="input-mail-login"
           className="form-container__input"
+          placeholder="pochta@yandex.ru"
           required
           minLength="2"
           maxLength="30"
@@ -35,6 +36,7 @@ function Login() {
           type="password"
           name="passwrd"
           id='input-pass-login'
+          placeholder="Введите пароль"
           className="form-container__input"
           required
         />

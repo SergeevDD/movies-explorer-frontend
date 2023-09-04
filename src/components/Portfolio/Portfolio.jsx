@@ -2,7 +2,7 @@ import arrow from '../../images/logo/arrow.svg'
 
 function Portfolio() {
   return (
-    <section className="portfolio" href='#fak'>
+    <section className="portfolio">
       <h2 className="portfolio__title">Портфолио</h2>
       <ul className="portfolio__list">
         <li className="portfolio__cell">
@@ -10,36 +10,36 @@ function Portfolio() {
             href="https://sergeevdd.github.io/how-to-learn/"
             target="_blank"
             rel="noreferrer">
-            Статичный сайт
-          </a>
-          <img className="portfolio__arrow"
+            <span>Статичный сайт</span>
+            <img className="portfolio__arrow"
             src={arrow}
             alt="стрелка"
           />
+          </a>
         </li>
         <li className="portfolio__cell">
           <a className="portfolio__link"
             href="https://sergeevdd.github.io/russian-travel/"
             target="_blank"
             rel="noreferrer">
-            Адаптивный сайт
-          </a>
-          <img className="portfolio__arrow"
+            <span>Адаптивный сайт</span>
+            <img className="portfolio__arrow"
             src={arrow}
             alt="стрелка"
           />
+          </a>
         </li>
         <li className="portfolio__cell">
           <a className="portfolio__link"
             href="http://sergeev.dmitry.nomoredomains.xyz"
             target="_blank"
             rel="noreferrer">
-            Одностраничное приложение
-          </a>
-          <img className="portfolio__arrow"
+           <span>Одностраничное приложение</span>
+            <img className="portfolio__arrow"
             src={arrow}
             alt="стрелка"
           />
+          </a>
         </li>
       </ul>
     </section>

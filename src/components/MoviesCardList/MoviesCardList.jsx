@@ -1,7 +1,7 @@
 import MoviesCard from '../MoviesCard/MoviesCard'
 import { movies } from '../../tempMoviesList'
 
-function MoviedCardList() {
+function MoviedCardList({store}) {
   return (
     <section className="movie" aria-label="films">
       <ul className="movie__list">
@@ -9,10 +9,11 @@ function MoviedCardList() {
         (<MoviesCard
           key={movie._id}
           movie={movie}
+          store={store}
         />)
         )}
       </ul>
-      <button className='movie__button-more'>Ещё</button>
+      {store && <button className='movie__button-more'>Ещё</button>}
     </section>
   );
 }

@@ -5,6 +5,8 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
+  display: flex;
+  height: 100vh;
 }
 
 .form-container__form {
@@ -139,8 +141,10 @@
 }
 @media screen and (min-width:600px) {
   .form-container {
-    padding-top: 232px;
+    padding-top: 30px;
+    justify-content: center;
   }
+
   .form-container__title {
     margin-top: 40px;
   }
