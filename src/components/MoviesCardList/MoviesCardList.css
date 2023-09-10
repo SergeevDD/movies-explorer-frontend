@@ -29,6 +29,11 @@
   justify-self: center;
   cursor: pointer;
 }
+.movie__text {
+  color: #fff;
+  font-size: 12;
+  margin: 0;
+}
 
 .movie__button-more:hover {
   opacity: .8;

@@ -1,16 +1,30 @@
+import { useEffect, useState } from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm'
+import { searchMovies } from '../../utils/Search';
 
-function SavedMovies() {
+function SavedMovies({ savedMovies, onDelete }) {
 
+  function onSearch({ key, store }) {
+    setFiltredMovies(searchMovies(key, store));
+  }
 
-    return (
-      <section>
-        <SearchForm />
-        <MoviesCardList store={false}/>
-      </section>
-    );
+  const [filtredMovies, setFiltredMovies] = useState([]);
+  const [filter, toggleFilter] = useState(false);
 
-    }
+  useEffect(() => {
+    console.log('ghjghjg', savedMovies);
+    setFiltredMovies(savedMovies);
+  }, [savedMovies]);
+
+  return (
+    <section>
+      {console.log('saved>', filtredMovies)}
+      <SearchForm onSubmit={onSearch} handleCheckBox={toggleFilter} />
+      <MoviesCardList movieList={filtredMovies} onDelete={onDelete} />
+    </section>
+  );
+
+}
 
 export default SavedMovies;

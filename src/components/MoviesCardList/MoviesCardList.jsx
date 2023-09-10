@@ -1,21 +1,37 @@
+import { useCallback, useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard'
-import { movies } from '../../tempMoviesList'
+import { useNavigate } from 'react-router-dom';
+import Preloader from '../Preloader/Preloader';
 
-function MoviedCardList({store}) {
+function MoviesCardList({ movieList, onRequest }) {
+
+  const location = useNavigate();
+
+
+  const convertToHour = useCallback((duration) => {
+    return {
+      hour: (duration / 60).toFixed(0),
+      minutes: duration % 60
+    }
+  }, [])
+
   return (
     <section className="movie" aria-label="films">
-      <ul className="movie__list">
-        {movies.map((movie) =>
-        (<MoviesCard
-          key={movie._id}
-          movie={movie}
-          store={store}
-        />)
+      {onRequest && <Preloader />}
+      {movieList[0] ? <ul className="movie__list">
+        {movieList.map((movie) => (<MoviesCard
+          key={movie._id || movie.id}
+          name={movie.nameRU}
+          url={movie.image.url ? `https://api.nomoreparties.co${movie.image.url}` :
+            movie.image}
+          duration={convertToHour(movie.duration)}
+          owner={movie.owner || false} />)
         )}
-      </ul>
-      {store && <button className='movie__button-more'>Ещё</button>}
+      </ul> :
+        !movieList[0] && <p className='movie__text'>Ничего не найдено</p>
+      }
     </section>
   );
 }
 
-export default MoviedCardList;
+export default MoviesCardList;

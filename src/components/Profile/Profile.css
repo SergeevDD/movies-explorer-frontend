@@ -110,17 +110,24 @@
 .profile__error {
   color: #FF004C;
   text-align: center;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 400;
   min-height: 8px;
+  max-width: 260px;
+  overflow: hidden;
 }
 
 @media screen and (min-width:600px) {
-  .profile{
+  .profile {
     padding-top: 238px;
   }
+
   .profile__button {
     font-size: 13px;
+  }
+
+  .profile__error {
+    max-width: 410px;
   }
 
   .profile__input-field {
@@ -128,7 +135,7 @@
     margin-bottom: 173px;
   }
 
-  .profile__input-name{
+  .profile__input-name {
     padding-top: 5px;
   }
 
@@ -138,16 +145,19 @@
 }
 
 @media screen and (min-width:900px) {
-  .profile{
+  .profile {
     padding-top: 75px;
   }
-  .profile__form{
-  padding-top: 112px;
-}
-.profile__input-field{
-  margin-bottom: 182px;
-}
-.profile__input-name{
-  padding-top: 0;
-}
+
+  .profile__form {
+    padding-top: 112px;
+  }
+
+  .profile__input-field {
+    margin-bottom: 182px;
+  }
+
+  .profile__input-name {
+    padding-top: 0;
+  }
 }

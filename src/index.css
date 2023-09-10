@@ -27,3 +27,6 @@
 @import url(./components/Register/Register.css);
 @import url(./components/Login/Login.css);
 @import url(./components/FormContainer/FormContainer.css);
+@import url(./components/InfoContainer/InfoContainer.css);
+@import url(./components/ToolTip/ToolTip.css);
+@import url(./components/DeletePopup/DeletePopup.css);

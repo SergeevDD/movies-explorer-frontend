@@ -1,0 +1,24 @@
+.tooltip-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 15px;
+  z-index: 0;
+  border-radius: 10px;
+  padding: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: Inter, Arial, sans-serif;
+  max-height: 250px;
+  overflow: auto;
+}
+
+
+@media screen and (min-width: 600px) {
+  .tooltip-container {
+    right: 0;
+  }
+}
+

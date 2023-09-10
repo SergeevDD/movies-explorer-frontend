@@ -8,7 +8,7 @@
 .search__form {
   display: grid;
   column-gap: 10px;
-  row-gap: 47px;
+  row-gap: 27px;
   border-bottom: 1px solid #424242;
   grid-template-columns: 1fr 44px;
   padding-bottom: 40px;
@@ -37,6 +37,18 @@
   cursor: pointer;
 }
 
+.search__error {
+  min-height: 20px;
+  color: #EE3465;
+  font-size: 10px;
+  font-weight: 400;
+  opacity: 0;
+}
+
+.search__error_active {
+  opacity: 1;
+}
+
 .search__button:hover {
   opacity: .8;
 }
@@ -49,7 +61,7 @@
   }
 
   .search__form {
-    row-gap: 41px;
+    row-gap: 21px;
   }
 }
 
@@ -60,10 +72,10 @@
   }
 
   .search__form {
-    row-gap: 29px;
+    row-gap: 9px;
   }
 
-  .search__button{
+  .search__button {
     margin-top: 3px;
   }
 }

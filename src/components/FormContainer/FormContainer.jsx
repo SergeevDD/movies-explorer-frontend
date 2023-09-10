@@ -3,14 +3,8 @@ import logo from "../../images/logo/logo.svg"
 
 
 function FormContainer({ onSubmit, children, ...props }) {
-  const navigate = useNavigate();
 
-  function login() {
-    navigate('/sign-in')
-  }
-  function register() {
-    navigate('/sign-up')
-  }
+
 const location = useLocation().pathname === '/sign-up';
 
   return (
