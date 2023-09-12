@@ -26,6 +26,7 @@ import {
   checkToken
 }
   from '../../utils/MainApi';
+import { getMoviesList } from '../../utils/MoviesApi'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import InfoContainer from '../InfoContainer/InfoContainer';
 
@@ -65,7 +66,7 @@ function App() {
         if (user.email === email) {
           handleCheckToken();
         } else {
-          addToolTip('error', `Сервер вернул не корректные данные`);
+          addToolTip('error', `Сервер вернул не корректную почту`);
         }
       })
       .catch((err) => {
@@ -84,6 +85,10 @@ function App() {
             name: "",
             email: "",
           })
+          localStorage.removeItem('findResult');
+          localStorage.removeItem('thumbler');
+          localStorage.removeItem('findString');
+          setLoggedIn(false);
         }
       }
       )
@@ -137,21 +142,14 @@ function App() {
   }
 
   function handleCheckToken() {
-    checkToken()
+  return  checkToken()
       .then((res) => {
         if (res.status) {
-          getCurrentUserData()
-            .then((user) => {
-              setCurrentUser(user);
-              setLoggedIn(true);
-              navigate("/movies", { replace: true });
-              addToolTip('access', `Вы вошли как: ${user.name}`);
-            })
-            .catch((err) => {
-              addToolTip('error', `Ошибка получения данных пользователя: ${err.text}`);
-              console.log('Ошибка: ', err.status, err.text)
-            })
+          console.log(res.status, 'status');
+          setLoggedIn(true);
+          navigate("/movies", { replace: true });
         } else {
+          console.log(res.status, 'status2');
           setLoggedIn(false);
           navigate("/", { replace: true });
           addToolTip('error', `Просмотр в гостевом режиме, авторизируйтесь`);
@@ -162,6 +160,19 @@ function App() {
         console.log('Ошибка: ', err.status, err.text);
       })
   }
+
+  function handleGetUser() {
+    getCurrentUserData()
+      .then((user) => {
+        setCurrentUser(user);
+        addToolTip('access', `Вы вошли как: ${user.name}`);
+      })
+      .catch((err) => {
+        addToolTip('error', `Ошибка получения данных пользователя: ${err.text}`);
+        console.log('Ошибка: ', err.status, err.text)
+      })
+  }
+
 
   const location = useLocation();
 
@@ -176,21 +187,25 @@ function App() {
   const [moviesStore, setMovies] = useState([]);
   const [userMoviesStore, setUserMovies] = useState([]);
   const [toolTips, setToolTips] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   useEffect(() => {
     handleCheckToken();
     if (isLoggedIn) {
-      getUserMovies()
-        .then((savedMovies) => {
+      handleGetUser();
+      Promise.all([getMoviesList(), getUserMovies()])
+        .then(([movies, savedMovies]) => {
           setUserMovies(savedMovies);
-        }
-        )
-        .catch((err) => {
-          console.log('Ошибка: ', err.status, err.text)
+          setMovies(movies);
         })
+        .catch((err) => {
+          addToolTip('error', `Проблема с соединением или сервер недоступен. Попробуйте позже`);
+          console.log('Ошибка: ', err.status, err.text);
+        })
+        .finally(() => setIsLoading(false))
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -205,11 +220,10 @@ function App() {
                   element={Movies}
                   loggedIn={isLoggedIn}
                   movies={moviesStore}
-                  addToolTip={addToolTip}
-                  setMovies={setMovies}
                   savedMovies={userMoviesStore}
                   onSave={handleAddMovie}
                   onDelete={confirmDelete}
+                  onLoad={isLoading}
                 />}
               />
               <Route path="/saved-movies" element={

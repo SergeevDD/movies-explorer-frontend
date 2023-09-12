@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useState, useEffect } from "react";
 
-function SearchForm({ handleCheckBox, onSubmit }) {
+function SearchForm({ handleShortFilms, onSubmit }) {
 
   const location = useLocation();
 
@@ -22,13 +22,13 @@ function SearchForm({ handleCheckBox, onSubmit }) {
     }
     onSubmit(
       {
-        name: findString,
-      }
-    );
+      findString:e.target.elements.filmName.value,
+      thumbler:e.target.elements.shortFilmToggle.checked
+    });
   }
 
   useEffect(() => {
-    if (localStorage.getItem('findString') && (location.pathname === '/movies')) {
+    if ((location.pathname === '/movies') && localStorage.getItem('findString')) {
       setFindString(localStorage.getItem('findString'))
     }
   }, [])
@@ -43,7 +43,7 @@ function SearchForm({ handleCheckBox, onSubmit }) {
         <input
           onChange={handleChangeKey}
           type="text"
-          name="film-name"
+          name="filmName"
           placeholder="Фильм"
           className="search__input"
           minLength="1"
@@ -58,7 +58,7 @@ function SearchForm({ handleCheckBox, onSubmit }) {
         <span className={`search__error ${warning && 'search__error_active'} `}>
           Нужно ввести ключевое слово
         </span>
-        <FilterCheckbox toggleCheckBox={handleCheckBox} location={location}/>
+        <FilterCheckbox location={location}  handleShortFilms={handleShortFilms}/>
       </form>
 
     </article>

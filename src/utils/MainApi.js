@@ -113,6 +113,7 @@ export function register({ name, email, password }) {
 export function logout() {
   return api.request(`signout`, {
     method: 'DELETE',
-    headers: api.headers
+    headers: api.headers,
+    credentials: "include",
   })
 };

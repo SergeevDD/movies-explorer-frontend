@@ -5,7 +5,7 @@ export default function useResize() {
 
   useEffect(() => {
     const handleResize = (event) => {
-      setTimeout(()=>setWidth(event.target.innerWidth), 1000)
+      setTimeout(() => setWidth(event.target.innerWidth), 2000)
     };
     window.addEventListener('resize', handleResize);
     return () => {
@@ -13,27 +13,25 @@ export default function useResize() {
     };
   }, [width]);
 
-  return {size:chooseSize(width)}
+  return { size: chooseSize(width) }
 };
 
 function chooseSize(width) {
   switch (true) {
-    case width <= 480 && width <= 768:
-      return {
-        quantity: 5,
-        add: 2,
-      }
-    case width <= 768 && width <= 1280:
+    case width >= 690 && width <= 1100:
       return {
         quantity: 8,
         add: 2,
       }
 
-    case width <= 1280:
+    case  width >= 1100:
       return {
         quantity: 12,
-        add: 2,
+        add: 3,
       }
-    default: return {}
+    default: return {
+      quantity: 5,
+      add: 2,
+    }
   }
 }

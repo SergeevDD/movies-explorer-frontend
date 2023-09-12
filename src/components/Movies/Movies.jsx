@@ -1,77 +1,91 @@
 import { useEffect, useState } from 'react'
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm'
-import { searchBeatfilm, showShortFilms } from '../../utils/Search'
-import { getMoviesList } from '../../utils/MoviesApi'
+import { showShortFilms, searchBeatfilm } from '../../utils/Search'
 import useResize from '../../utils/useResizer'
+import Preloader from '../Preloader/Preloader';
 
+function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
 
-function Movies({ movies, setMovies, savedMovies, onSave, onDelete, addToolTip }) {
-
-  function onSearch({ name }) {
-    localStorage.setItem('findString', name);
-    localStorage.setItem('thumbler', filter);
-    const found = searchBeatfilm(name, movies)
-    if (filter) {
-      const foundShort = showShortFilms(found);
+  function handleShortFilms(thumb, films = movies) {
+    if (thumb && localStorage.getItem('findShortResult')) {
+      const foundShort = JSON.parse(localStorage.getItem('findShortResult'));
       setFiltredMovies(foundShort.length === 0 ? [false] : foundShort)
-    } else {
-      setFiltredMovies(searchBeatfilm(name, movies))
+    } else if (localStorage.getItem('findResult')) {
+      const found = JSON.parse(localStorage.getItem('findResult'));
+      setFiltredMovies(found === 0 ? [false] : found)
     }
   }
+
+  function onSearch({ findString, thumbler }) {
+    const found = searchBeatfilm({ thumbler, findString }, movies)
+    handleShortFilms(thumbler, found);
+  }
+
   const { size } = useResize();
-  const [filtredMovies, setFiltredMovies] = useState([false]);
-  const [filter, toggleFilter] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [showedCount, setShowedCount] = useState(0);
+  const [filtredMovies, setFiltredMovies] = useState([]);
+  const [listLength, setListLength] = useState(0);
+  const [chunk, setChunk] = useState(size.add);
   const [moreBtn, setMoreBtn] = useState(false);
 
+  function addMoreFilms() {
+    if (filtredMovies.length >= listLength) {
+      const newLength =
+        listLength + chunk <= filtredMovies.length + 1 ?
+          listLength + chunk :
+          filtredMovies.length
+      setListLength(newLength);
+    }
+  }
 
   useEffect(() => {
-    getMoviesList()
-      .then((list) => {
-        setMovies(list)
-      })
-      .catch((err) => {
-        addToolTip('error', `Сервер Beat Film сейчас недоступен, попробуйте позже: ${err.text}`);
-        console.log('Ошибка: ', err.status, err.text);
-      })
-      .finally(() => setIsLoading(false))
-  }, [])
-
-  useEffect(() => {
+    setListLength(size.quantity);
     if (localStorage.getItem('findResult')) {
-      const pastSearchResult = JSON.parse(localStorage.getItem('findResult')).films;
-      if (pastSearchResult.length > size.quantity) {
-        setMoreBtn(true);
-        setShowedCount(size.quantity);
-        /* Повторяется после поиска коротких работакет только при монтировании*/
+      const pastSearchResult = JSON.parse(localStorage.getItem('findResult'));
+      if (pastSearchResult.length === 0) {
+        setFiltredMovies([false])
+        return
       }
-      if (filter) {
+      if (localStorage.getItem('thumbler')) {
         const filmList = showShortFilms(pastSearchResult)
-        setFiltredMovies(filmList.length === 0 ? [false] : filmList)
+        setFiltredMovies(filmList.length === 0 ? [false] : filmList);
       } else {
-        setFiltredMovies(pastSearchResult.slice(0,showedCount))
+        setFiltredMovies(pastSearchResult);
       }
     }
-  }, [filter])
+  }, []);
 
+  useEffect(() => {
+    setChunk(size.add);
+  }, [size]);
+
+  useEffect(() => {
+    if (filtredMovies.length > listLength) {
+      setMoreBtn(true);
+    } else {
+      setMoreBtn(false);
+    }
+  }, [filtredMovies, listLength])
 
   return (
-    <section>
-      {console.log(size)}
-      <SearchForm handleCheckBox={toggleFilter} onSubmit={onSearch} />
+    <section aria-label='movies' className='movies-main'>
+      <SearchForm onSubmit={onSearch} handleShortFilms={handleShortFilms} />
       <MoviesCardList
         movieList={filtredMovies}
+        listLength={listLength}
         onDelete={onDelete}
-        onRequest={isLoading}
+        onRequest={onLoad}
       />
-      {moreBtn &&
-        <button
-          className='movie__button-more'
-        >
-          Ещё
-        </button>}
+      {onLoad && <Preloader />}
+      <div className='movies-main__more'>
+        {moreBtn &&
+          <button
+            onClick={addMoreFilms}
+            className='movies-main__button-more'
+          >
+            Ещё
+          </button>}
+      </div>
     </section>
   );
 }
