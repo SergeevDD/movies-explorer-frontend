@@ -5,6 +5,7 @@ export default class Api {
   }
 
   _checkResponse(response) {
+    console.log('api check');
     if (response.ok) {
       return response.json();
     }

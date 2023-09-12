@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../Header/Header'
 import Movies from '../Movies/Movies'
 import SavedMovies from '../SavedMovies/SavedMovies'
@@ -9,7 +9,6 @@ import Login from '../Login/Login'
 import Register from '../Register/Register'
 import NavState from '../../contexts/menuStateContext'
 import Main from '../Main/Main'
-import Preloader from '../Preloader/Preloader'
 import DeletePopup from '../DeletePopup/DeletePopup'
 import { renderFooter, renderHeader } from '../../utils/renderChoose'
 import NotFound from '../NotFound/NotFound';
@@ -86,6 +85,7 @@ function App() {
             email: "",
           })
           localStorage.removeItem('findResult');
+          localStorage.removeItem('findShortResult');
           localStorage.removeItem('thumbler');
           localStorage.removeItem('findString');
           setLoggedIn(false);
@@ -99,10 +99,12 @@ function App() {
   }
 
   function handleAddMovie(movie) {
+    console.log(movie);
     addUserFilm(movie)
       .then((newFilm) => {
+        console.log(newFilm);
         setUserMovies([newFilm, ...userMoviesStore]);
-        addToolTip('access', `Фильм ${newFilm.name} добавлен в коллекцию`);
+        addToolTip('access', `Фильм "${newFilm.nameRU}" добавлен в коллекцию`);
       })
       .catch((err) => {
         addToolTip('error', `Ошибка добавления фильма в коллекцию: ${err.text}`);
@@ -115,16 +117,21 @@ function App() {
     setWantToDelete(id);
   }
 
-  function handleDeleteMovie() {
-    removeUserFilm(wantToDelete)
+  function handleDeleteMovie(id) {
+    console.log(id, '||', wantToDelete);
+    const filmId = wantToDelete.length > 0 ? wantToDelete : id;
+    console.log(filmId);
+    removeUserFilm(filmId)
       .then((newFilm) => {
-        setUserMovies(state => state.filter((c) => c._id !== wantToDelete._id));
-        addToolTip('access', `Фильм ${newFilm.name} удален из коллекции`);
+        console.log(newFilm);
+        setUserMovies(state => state.filter((m) => m._id !== filmId));
+        addToolTip('access', `Фильм "${newFilm.nameRU}" удален из коллекции`);
       })
       .catch((err) => {
-        addToolTip('error', `Ошибка добавления фильма в коллекцию: ${err.text}`);
+        addToolTip('error', `Ошибка удаления фильма из коллекции: ${err.text}`);
         console.log('Ошибка: ', err.status, err.text)
       })
+      .finally(() => setWantToDelete(''))
   }
 
   function addToolTip(type, text) {
@@ -142,14 +149,12 @@ function App() {
   }
 
   function handleCheckToken() {
-  return  checkToken()
+    return checkToken()
       .then((res) => {
         if (res.status) {
-          console.log(res.status, 'status');
           setLoggedIn(true);
           navigate("/movies", { replace: true });
         } else {
-          console.log(res.status, 'status2');
           setLoggedIn(false);
           navigate("/", { replace: true });
           addToolTip('error', `Просмотр в гостевом режиме, авторизируйтесь`);
@@ -192,6 +197,7 @@ function App() {
 
   useEffect(() => {
     handleCheckToken();
+    setIsLoading(true);
     if (isLoggedIn) {
       handleGetUser();
       Promise.all([getMoviesList(), getUserMovies()])
@@ -205,6 +211,7 @@ function App() {
         })
         .finally(() => setIsLoading(false))
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   return (
@@ -222,7 +229,7 @@ function App() {
                   movies={moviesStore}
                   savedMovies={userMoviesStore}
                   onSave={handleAddMovie}
-                  onDelete={confirmDelete}
+                  onDelete={handleDeleteMovie}
                   onLoad={isLoading}
                 />}
               />
@@ -232,6 +239,7 @@ function App() {
                   loggedIn={isLoggedIn}
                   savedMovies={userMoviesStore}
                   onDelete={confirmDelete}
+                  onLoad={isLoading}
                 />}
               />
               <Route path="/profile" element={
@@ -264,7 +272,7 @@ function App() {
           film={wantToDelete}
           isOpen={isDeleteOpen}
           onClose={setIsDeleteOpen}
-          onDeleteMovie={handleDeleteMovie}
+          onDelete={handleDeleteMovie}
         />
       }
       {renderFooter(location) && <Footer />}

@@ -3,7 +3,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm'
 import { showShortFilms, searchBeatfilm } from '../../utils/Search'
 import useResize from '../../utils/useResizer'
-import Preloader from '../Preloader/Preloader';
+import Preloader from '../Preloader/Preloader'
 
 function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
 
@@ -53,6 +53,7 @@ function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
         setFiltredMovies(pastSearchResult);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -73,6 +74,8 @@ function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
       <MoviesCardList
         movieList={filtredMovies}
         listLength={listLength}
+        savedMovies={savedMovies}
+        onSave={onSave}
         onDelete={onDelete}
         onRequest={onLoad}
       />

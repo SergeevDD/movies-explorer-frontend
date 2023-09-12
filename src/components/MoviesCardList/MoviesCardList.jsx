@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard'
 
-function MoviesCardList({ movieList, listLength }) {
+function MoviesCardList({ movieList, listLength, savedMovies, onSave, onDelete }) {
 
   const convertToHour = useCallback((duration) => {
     return {
@@ -16,14 +16,18 @@ function MoviesCardList({ movieList, listLength }) {
         <ul className="movie__list">
           {movieList.slice(0, listLength >= 0 ? listLength : movieList.length).map((movie) => (<MoviesCard
             key={movie._id || movie.id}
-            name={movie.nameRU}
+            id={movie._id || movie.id}
+            movie={movie}
             url={movie.image.url ? `https://api.nomoreparties.co${movie.image.url}` :
               movie.image}
             duration={convertToHour(movie.duration)}
-            owner={movie.owner || false} />)
+            savedMovies={savedMovies}
+            onSave={onSave}
+            onDelete={onDelete}
+          />)
           )}
         </ul> :
-        !movieList[0] && <p className='movie__text'>Ничего не найдено</p>
+        movieList[0] === false && <p className='movie__text'>Ничего не найдено</p>
       }
     </section>
   );

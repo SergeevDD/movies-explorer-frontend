@@ -5,7 +5,6 @@ export function showShortFilms(films) {
 }
 
 export function searchMovies(key, store) {
-  console.log(key);
   const regexp = new RegExp(`${key}`, 'im');
   const findedFilms = store.filter((movie) => {
     return regexp.test(`${movie.nameRU} ${movie.nameEN}`)
@@ -14,7 +13,6 @@ export function searchMovies(key, store) {
 }
 
 export function searchBeatfilm(key, store) {
-  console.log(key);
   const films = searchMovies(key.findString, store)
   localStorage.setItem('findResult', JSON.stringify(films));
   localStorage.setItem('thumbler', key.thumbler);

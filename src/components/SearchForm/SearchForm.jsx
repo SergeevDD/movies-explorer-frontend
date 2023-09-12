@@ -31,7 +31,7 @@ function SearchForm({ handleShortFilms, onSubmit }) {
     if ((location.pathname === '/movies') && localStorage.getItem('findString')) {
       setFindString(localStorage.getItem('findString'))
     }
-  }, [])
+  }, [location.pathname])
 
   return (
     <article className='search'>

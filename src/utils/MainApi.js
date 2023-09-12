@@ -58,6 +58,19 @@ export function addUserFilm(
     thumbnail,
     movieId
   }) {
+    console.log({
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailer,
+      nameRU,
+      nameEN,
+      thumbnail,
+      movieId
+    });
   return api.request(`movies`, {
     method: 'POST',
     headers: api.headers,
@@ -69,7 +82,7 @@ export function addUserFilm(
       year: year,
       description: description,
       image: image,
-      trailer: trailer,
+      trailerLink: trailer,
       nameRU: nameRU,
       nameEN: nameEN,
       thumbnail: thumbnail,

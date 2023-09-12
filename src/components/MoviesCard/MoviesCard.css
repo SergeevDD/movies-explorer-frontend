@@ -11,6 +11,10 @@
   margin: 0 auto;
 }
 
+.card:hover>.card__btn {
+  display: block;
+}
+
 .card__image {
   aspect-ratio: 1 / 1;
   height: 100%;
@@ -58,6 +62,7 @@
   min-height: 21px;
   background-repeat: no-repeat;
   cursor: pointer;
+  display: none;
 }
 
 .card__btn:hover {
@@ -70,11 +75,12 @@
 
 .card__btn_saved {
   background-image: url(../../images/logo/incollection.svg);
+  display: block;
 }
 
 .card__btn_save {
-min-width: 72px;
-background-image: url(../../images/logo/savefilm.svg);
+  min-width: 72px;
+  background-image: url(../../images/logo/savefilm.svg);
 }
 
 .card-action:hover {
@@ -100,8 +106,9 @@ background-image: url(../../images/logo/savefilm.svg);
   }
 
   .card__btn {
-    top:16px;
-    right: 14px;;
+    top: 16px;
+    right: 14px;
+    ;
   }
 
 }
