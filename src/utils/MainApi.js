@@ -1,6 +1,6 @@
 import Api from "./Api";
-const url = 'http://localhost:3000/';
-/* const url = 'https://api.dmitry.sergeev.nomoreparties.co/'; */
+
+const url = 'https://api.dmitry.sergeev.nomoreparties.co/';
 const api = new Api({
   baseUrl: url,
   headers: {
