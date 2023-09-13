@@ -11,7 +11,6 @@ function FilterCheckbox({ location, handleShortFilms }) {
   }, [location.pathname])
 
   function handleSwitch(e) {
-    console.log(e.target.checked);
     setIsCheck(e.target.checked);
     handleShortFilms(e.target.checked,);
   }

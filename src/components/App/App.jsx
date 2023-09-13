@@ -34,7 +34,7 @@ function App() {
   const navigate = useNavigate();
 
   function handleUpdateUserData({ name, email }) {
-    updateCurrentUserData({ name, email })
+    return updateCurrentUserData({ name, email })
       .then((newUser) => {
         setCurrentUser(newUser);
         addToolTip('access', `Данные пользователя ${newUser.name} обновлены.`);
@@ -42,11 +42,12 @@ function App() {
       .catch((err) => {
         addToolTip('error', `Ошибка обновленя данных пользователя: ${err.text}`);
         console.log('Ошибка: ', err.status, err.text)
+        return('При обновлении профиля произошла ошибка');
       });
   }
 
   function handleRegister({ name, email, password }) {
-    register({ name, email, password })
+    return register({ name, email, password })
       .then((user) => {
         if (user.email === email) {
           addToolTip('access', `Пользователь ${user.name} успешно зарегистрирован.`);
@@ -54,13 +55,15 @@ function App() {
         }
       })
       .catch(err => {
-        addToolTip('error', `Ошибка регистрации пользователя пользователя: ${err.text}`);
-        console.log('Ошибка: ', err.status, err.text)
+        addToolTip('error', `Ошибка регистрации пользователя: ${err.text}`);
+        console.log('Ошибка: ', err.status, err.text);
+        return ('При регистрации возникла ошибка');
+
       });
   }
 
   function handleLogin({ email, password }) {
-    authorize({ email, password })
+    return authorize({ email, password })
       .then((user) => {
         if (user.email === email) {
           handleCheckToken();
@@ -71,6 +74,7 @@ function App() {
       .catch((err) => {
         addToolTip('error', `Ошибка авторизации: ${err.text}`);
         console.log('Ошибка: ', err.status, err.text);
+        return ('При авторизации возникла ошибка');
       });
   }
 
@@ -178,7 +182,6 @@ function App() {
       })
   }
 
-
   const location = useLocation();
 
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -194,7 +197,6 @@ function App() {
   const [toolTips, setToolTips] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-
   useEffect(() => {
     handleCheckToken();
     setIsLoading(true);
@@ -204,6 +206,7 @@ function App() {
         .then(([movies, savedMovies]) => {
           setUserMovies(savedMovies);
           setMovies(movies);
+          addToolTip('access', `База фильмов beatfilm загружена`);
         })
         .catch((err) => {
           addToolTip('error', `Проблема с соединением или сервер недоступен. Попробуйте позже`);
@@ -211,7 +214,7 @@ function App() {
         })
         .finally(() => setIsLoading(false))
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   return (

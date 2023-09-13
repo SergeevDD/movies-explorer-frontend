@@ -46,7 +46,7 @@ function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
         setFiltredMovies([false])
         return
       }
-      if (localStorage.getItem('thumbler')) {
+      if (localStorage.getItem('thumbler') === true) {
         const filmList = showShortFilms(pastSearchResult)
         setFiltredMovies(filmList.length === 0 ? [false] : filmList);
       } else {
@@ -71,6 +71,7 @@ function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
   return (
     <section aria-label='movies' className='movies-main'>
       <SearchForm onSubmit={onSearch} handleShortFilms={handleShortFilms} />
+      {onLoad && <Preloader />}
       <MoviesCardList
         movieList={filtredMovies}
         listLength={listLength}
@@ -79,7 +80,6 @@ function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
         onDelete={onDelete}
         onRequest={onLoad}
       />
-      {onLoad && <Preloader />}
       <div className='movies-main__more'>
         {moreBtn &&
           <button

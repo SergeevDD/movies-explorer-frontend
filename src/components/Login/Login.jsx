@@ -1,10 +1,12 @@
 import FormContainer from "../FormContainer/FormContainer";
 import useInputValdator from "../../utils/useInputValidator";
+import { useState } from "react";
 
-function Login({ handleLogin }) {
+function Login({ handleLogin}) {
 
   const email = useInputValdator('');
   const password = useInputValdator('');
+  const [apiError, setApiError] = useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -12,7 +14,11 @@ function Login({ handleLogin }) {
       email: email.value,
       password: password.value,
     }
-    );
+    ).then((loginResult) => {
+      if (loginResult) {
+       setApiError(loginResult);
+     }
+   })
   }
 
   return (
@@ -29,6 +35,7 @@ function Login({ handleLogin }) {
             onChange={email.handleChangeValue}
             type="email"
             name="email"
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             id="input-mail-login"
             className="form-container__input"
             placeholder="pochta@yandex.ru"
@@ -50,7 +57,7 @@ function Login({ handleLogin }) {
           <input
             onChange={password.handleChangeValue}
             type="password"
-            name="passwrd"
+            name="password"
             id='input-pass-login'
             placeholder="Введите пароль"
             className="form-container__input"
@@ -63,11 +70,14 @@ function Login({ handleLogin }) {
             {password.validateMsg}
           </span>
         </fieldset>
+        <span className="form-container__error form-container__error_api">{apiError}</span>
         <button
           disabled={!email.validity || !password.validity}
           name="loginBtn"
           type="submit"
-          className='form-container__button'>
+          className={`form-container__button
+          ${password.validity && email.validity ? '' : 'form-container__button_disabled'}`
+          }>
           Войти
         </button>
       </>

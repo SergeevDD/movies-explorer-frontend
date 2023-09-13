@@ -41,6 +41,7 @@
   color: #fff;
   text-align: end;
   outline: none;
+  min-width: 60%;
 }
 
 .profile__input-field {
@@ -74,6 +75,10 @@
   font-weight: 400;
   max-width: 300px;
   align-self: center;
+}
+
+.profile__button_disabled {
+  color: #c2c2c2;
 }
 
 .profile__button:hover {

@@ -2,7 +2,7 @@ import errorImg from '../../images/logo/error.svg';
 import acceptImg from '../../images/logo/success.svg';
 import { useState, useEffect } from 'react';
 function ToolTip({ type, message, onDelete }) {
-  const deleteDelay = 2400;
+  const deleteDelay = 3800;
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
