@@ -18,6 +18,7 @@ function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
   }
 
   function onSearch({ findString, thumbler }) {
+    setListLength(size.quantity);
     const found = searchBeatfilm({ thumbler, findString }, movies)
     handleShortFilms(thumbler, found);
   }
