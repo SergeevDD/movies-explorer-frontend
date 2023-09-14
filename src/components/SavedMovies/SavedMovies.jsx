@@ -20,7 +20,6 @@ function SavedMovies({ savedMovies, onDelete, onLoad }) {
       return
     }
     if (thumbler) {
-      console.log(thumbler);
       const shortFilms = showShortFilms(foundFilms)
       setFiltredMovies(shortFilms.length > 0 ? shortFilms : [false])
     } else {

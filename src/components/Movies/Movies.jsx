@@ -5,7 +5,7 @@ import { showShortFilms, searchBeatfilm } from '../../utils/Search'
 import useResize from '../../utils/useResizer'
 import Preloader from '../Preloader/Preloader'
 
-function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
+function Movies({ movies, savedMovies, onSave, onDelete, onLoad, getCollection }) {
 
   function handleShortFilms(thumb, films = movies) {
     if (thumb && localStorage.getItem('findShortResult')) {
@@ -18,9 +18,18 @@ function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
   }
 
   function onSearch({ findString, thumbler }) {
-    setListLength(size.quantity);
-    const found = searchBeatfilm({ thumbler, findString }, movies)
-    handleShortFilms(thumbler, found);
+    if (movies.length === 0) {
+      getCollection()
+        .then((movies) => {
+          setListLength(size.quantity);
+          const found = searchBeatfilm({ thumbler, findString }, movies)
+          handleShortFilms(thumbler, found);
+        })
+    } else {
+      setListLength(size.quantity);
+      const found = searchBeatfilm({ thumbler, findString }, movies)
+      handleShortFilms(thumbler, found);
+    }
   }
 
   const { size } = useResize();
@@ -48,7 +57,6 @@ function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
         return
       }
       if (localStorage.getItem('thumbler') === 'true') {
-
         const filmList = showShortFilms(pastSearchResult)
         setFiltredMovies(filmList.length === 0 ? [false] : filmList);
       } else {

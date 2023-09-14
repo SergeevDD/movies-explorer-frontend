@@ -25,18 +25,47 @@ import {
   checkToken
 }
   from '../../utils/MainApi';
-import { getMoviesList } from '../../utils/MoviesApi'
+import { getMoviesList } from '../../utils/MoviesApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import InfoContainer from '../InfoContainer/InfoContainer';
 import UnknownUserElement from '../../UnknownUserRoute/UnknownUserRoute';
 
 function App() {
 
-  function clearLocalStorage() {
+  function clearStorage() {
     localStorage.removeItem('findResult');
     localStorage.removeItem('findShortResult');
     localStorage.removeItem('thumbler');
     localStorage.removeItem('findString');
+    setMovies([]);
+    setUserMovies([]);
+  }
+
+  function getBeatFilmCollection() {
+    setIsLoading(true)
+  return  getMoviesList()
+      .then((movies) => {
+        setMovies(movies);
+        addToolTip('access', `База фильмов beatfilm загружена`);
+        return movies
+      })
+      .catch((err) => {
+        addToolTip('error', `Проблема с соединением или сервер недоступен. Попробуйте позже`);
+        console.log('Ошибка: ', err.status, err.text);
+      })
+      .finally(() => setIsLoading(false))
+  }
+
+  function getUserCollection() {
+  return  getUserMovies()
+      .then((savedMovies) => {
+        setUserMovies(savedMovies );
+      })
+      .catch((err) => {
+        addToolTip('error', `Проблема с соединением или сервер недоступен. Попробуйте позже`);
+        console.log('Ошибка: ', err.status, err.text);
+      })
+      .finally(() => setIsLoading(false))
   }
 
   function handleUpdateUserData({ name, email }) {
@@ -113,7 +142,7 @@ function App() {
             name: "",
             email: "",
           })
-          clearLocalStorage();
+          clearStorage();
           setLoggedIn(false);
         }
       }
@@ -127,7 +156,6 @@ function App() {
   function handleAddMovie(movie) {
     addUserFilm(movie)
       .then((newFilm) => {
-        console.log(newFilm);
         setUserMovies([newFilm, ...userMoviesStore]);
         addToolTip('access', `Фильм "${newFilm.nameRU}" добавлен в коллекцию`);
       })
@@ -177,7 +205,7 @@ function App() {
           setLoggedIn(true);
         } else {
           setLoggedIn(false);
-          clearLocalStorage();
+          clearStorage();
         }
       })
       .catch((err) => {
@@ -217,20 +245,9 @@ function App() {
 
   useEffect(() => {
     handleCheckToken();
-    setIsLoading(true);
     if (isLoggedIn) {
       handleGetUser();
-      Promise.all([getMoviesList(), getUserMovies()]) /* загружать фильмы битс только при первом поиске*/
-        .then(([movies, savedMovies]) => {
-          setUserMovies(savedMovies);
-          setMovies(movies);
-          addToolTip('access', `База фильмов beatfilm загружена`);
-        })
-        .catch((err) => {
-          addToolTip('error', `Проблема с соединением или сервер недоступен. Попробуйте позже`);
-          console.log('Ошибка: ', err.status, err.text);
-        })
-        .finally(() => setIsLoading(false))
+      getUserCollection();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
@@ -252,6 +269,7 @@ function App() {
                   onSave={handleAddMovie}
                   onDelete={handleDeleteMovie}
                   onLoad={isLoading}
+                  getCollection={getBeatFilmCollection}
                 />}
               />
               <Route path="/saved-movies" element={
@@ -261,6 +279,7 @@ function App() {
                   savedMovies={userMoviesStore}
                   onDelete={confirmDelete}
                   onLoad={isLoading}
+                  getCollection={getUserCollection}
                 />}
               />
               <Route path="/profile" element={
