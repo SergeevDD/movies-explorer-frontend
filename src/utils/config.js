@@ -1,7 +1,6 @@
 
 export const API_URL = {
-  /*MAIN:  'https://api.dmitry.sergeev.nomoreparties.co/' */
-  MAIN: 'http://localhost:3000/',
+  MAIN:  'https://api.dmitry.sergeev.nomoreparties.co/',
   BEATFILM: 'https://api.nomoreparties.co/',
 };
 
