@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import Header from '../Header/Header'
 import Movies from '../Movies/Movies'
@@ -28,10 +28,16 @@ import {
 import { getMoviesList } from '../../utils/MoviesApi'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import InfoContainer from '../InfoContainer/InfoContainer';
+import UnknownUserElement from '../../UnknownUserRoute/UnknownUserRoute';
 
 function App() {
 
-  const navigate = useNavigate();
+  function clearLocalStorage() {
+    localStorage.removeItem('findResult');
+    localStorage.removeItem('findShortResult');
+    localStorage.removeItem('thumbler');
+    localStorage.removeItem('findString');
+  }
 
   function handleUpdateUserData({ name, email }) {
     setOnRequest(true);
@@ -99,10 +105,7 @@ function App() {
             name: "",
             email: "",
           })
-          localStorage.removeItem('findResult');
-          localStorage.removeItem('findShortResult');
-          localStorage.removeItem('thumbler');
-          localStorage.removeItem('findString');
+          clearLocalStorage();
           setLoggedIn(false);
         }
       }
@@ -167,11 +170,9 @@ function App() {
       .then((res) => {
         if (res.status) {
           setLoggedIn(true);
-          navigate("/movies", { replace: true });
         } else {
           setLoggedIn(false);
-          navigate("/", { replace: true });
-          addToolTip('error', `Просмотр в гостевом режиме, авторизируйтесь`);
+          clearLocalStorage();
         }
       })
       .catch((err) => {
@@ -192,6 +193,7 @@ function App() {
       })
   }
 
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -209,11 +211,16 @@ function App() {
   const [onRequest, setOnRequest] = useState(false);
 
   useEffect(() => {
+    if (location.state !== 'unknown') {
+      console.log(location);
+    } else {
+      console.log('jj', location);
+    }
     handleCheckToken();
     setIsLoading(true);
     if (isLoggedIn) {
       handleGetUser();
-      Promise.all([getMoviesList(), getUserMovies()])
+      Promise.all([getMoviesList(), getUserMovies()]) /* загружать фильмы битс только при первом поиске*/
         .then(([movies, savedMovies]) => {
           setUserMovies(savedMovies);
           setMovies(movies);
@@ -266,19 +273,22 @@ function App() {
                 />}
               />
               <Route path="/sign-up" element={
-                <Register
+                <UnknownUserElement
+                  element={Register}
                   handleRegister={handleRegister}
                   onRequest={onRequest}
                 />}
               />
               <Route path="/sign-in" element={
-                <Login
+                <UnknownUserElement
+                  element={Login}
                   handleLogin={handleLogin}
                   onRequest={onRequest}
                 />}
               />
-              <Route path='/404' element={<NotFound />} />
-              <Route path='*' element={<NotFound />} />
+              <Route path='*' element={
+                <NotFound/>}
+              />
             </Routes>
 
           </main>
