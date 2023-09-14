@@ -87,14 +87,15 @@ function App() {
     return authorize({ email, password })
       .then((user) => {
         if (user.email === email) {
-          handleCheckToken();
+          setLoggedIn(true);
+          navigate("/movies", { replace: true });
         } else {
           addToolTip('error', `Сервер вернул не корректную почту`);
         }
       })
       .catch((err) => {
         addToolTip('error', `Ошибка авторизации: ${err.text}`);
-        console.log('Ошибка: ', err.status, err.text);
+        console.log('Ошибка: ', err);
         return ('При авторизации возникла ошибка');
       })
       .finally(() => {
@@ -142,12 +143,9 @@ function App() {
   }
 
   function handleDeleteMovie(id) {
-    console.log(id, '||', wantToDelete);
     const filmId = wantToDelete.length > 0 ? wantToDelete : id;
-    console.log(filmId);
     removeUserFilm(filmId)
       .then((newFilm) => {
-        console.log(newFilm);
         setUserMovies(state => state.filter((m) => m._id !== filmId));
         addToolTip('access', `Фильм "${newFilm.nameRU}" удален из коллекции`);
       })
@@ -276,6 +274,7 @@ function App() {
               />
               <Route path="/sign-up" element={
                 <UnknownUserElement
+                  loggedIn={isLoggedIn}
                   element={Register}
                   handleRegister={handleRegister}
                   onRequest={onRequest}
@@ -283,6 +282,7 @@ function App() {
               />
               <Route path="/sign-in" element={
                 <UnknownUserElement
+                  loggedIn={isLoggedIn}
                   element={Login}
                   handleLogin={handleLogin}
                   onRequest={onRequest}

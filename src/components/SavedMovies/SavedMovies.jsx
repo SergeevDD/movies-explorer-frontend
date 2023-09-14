@@ -6,11 +6,12 @@ import Preloader from '../Preloader/Preloader'
 
 function SavedMovies({ savedMovies, onDelete, onLoad }) {
 
-  function handleShortFilms(thumbler, films = savedMovies, findString = filterString) {
-    if (!findString) {
+  function handleFindFilms(thumbler, films = savedMovies, findString = filterString) {
+    setFilter(thumbler)
+    if (findString === '') {
       thumbler ?
-      setFiltredMovies(films.length > 0 ? showShortFilms(films) : []) :
-      setFiltredMovies(films.length > 0 ? films : []);
+        setFiltredMovies(films.length > 0 ? showShortFilms(films) : []) :
+        setFiltredMovies(films.length > 0 ? films : []);
       return
     }
     const foundFilms = searchMovies(findString, films);
@@ -19,6 +20,7 @@ function SavedMovies({ savedMovies, onDelete, onLoad }) {
       return
     }
     if (thumbler) {
+      console.log(thumbler);
       const shortFilms = showShortFilms(foundFilms)
       setFiltredMovies(shortFilms.length > 0 ? shortFilms : [false])
     } else {
@@ -27,22 +29,24 @@ function SavedMovies({ savedMovies, onDelete, onLoad }) {
   }
 
   function onSearch({ findString, thumbler }) {
+    setFilter(thumbler);
     setFilterString(findString);
-    handleShortFilms(thumbler, savedMovies, findString);
+    handleFindFilms(thumbler, savedMovies, findString);
   }
-
+  const [filter, setFilter] = useState();
   const [filtredMovies, setFiltredMovies] = useState([]);
-  const [filterString, setFilterString] = useState(false);
+  const [filterString, setFilterString] = useState('');
 
   useEffect(() => {
-    setFiltredMovies(savedMovies);
+    handleFindFilms(filter, savedMovies, filterString)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedMovies]);
 
   return (
     <section aria-label='saved-movies'>
       <SearchForm
         onSubmit={onSearch}
-        handleShortFilms={handleShortFilms} />
+        handleShortFilms={handleFindFilms} />
       {onLoad && <Preloader />}
       <MoviesCardList
         movieList={filtredMovies}
