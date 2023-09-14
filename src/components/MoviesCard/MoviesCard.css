@@ -20,6 +20,12 @@
   grid-column: 1 / 3;
 }
 
+.card__trailer-link {
+  height: 100%;
+  width: 100%;
+  grid-column: 1 / 3;
+}
+
 .card__name {
   color: #fff;
   margin: 0;

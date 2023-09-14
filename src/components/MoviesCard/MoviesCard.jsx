@@ -28,16 +28,23 @@ function MoviesCard({ id, movie, url, duration, onSave, onDelete, savedMovies })
   }
 
   function handleDelete() {
-      onDelete(id)
+    onDelete(id)
   }
 
   return (
     <li className="card">
-      <img
-        className="card__image"
-        alt={movie.nameRU}
-        src={url}
-      />
+      <a
+        href={movie.trailerLink}
+        className="card__trailer-link"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img
+          className="card__image"
+          alt={movie.nameRU}
+          src={url}
+        />
+      </a>
       <h2 className="card__name">{movie.nameRU}</h2>
       <p className="card__duration">
         {duration.hour > 0 ?
