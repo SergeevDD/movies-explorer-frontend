@@ -13,7 +13,7 @@ function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
       setFiltredMovies(foundShort.length === 0 ? [false] : foundShort)
     } else if (localStorage.getItem('findResult')) {
       const found = JSON.parse(localStorage.getItem('findResult'));
-      setFiltredMovies(found === 0 ? [false] : found)
+      setFiltredMovies(found.length === 0 ? [false] : found)
     }
   }
 
@@ -47,14 +47,15 @@ function Movies({ movies, savedMovies, onSave, onDelete, onLoad }) {
         setFiltredMovies([false])
         return
       }
-      if (localStorage.getItem('thumbler') === true) {
+      if (localStorage.getItem('thumbler') === 'true') {
+
         const filmList = showShortFilms(pastSearchResult)
         setFiltredMovies(filmList.length === 0 ? [false] : filmList);
       } else {
         setFiltredMovies(pastSearchResult);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
