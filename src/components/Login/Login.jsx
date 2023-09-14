@@ -2,7 +2,7 @@ import FormContainer from "../FormContainer/FormContainer";
 import useInputValdator from "../../utils/useInputValidator";
 import { useState } from "react";
 
-function Login({ handleLogin}) {
+function Login({ handleLogin, onRequest }) {
 
   const email = useInputValdator('');
   const password = useInputValdator('');
@@ -16,9 +16,9 @@ function Login({ handleLogin}) {
     }
     ).then((loginResult) => {
       if (loginResult) {
-       setApiError(loginResult);
-     }
-   })
+        setApiError(loginResult);
+      }
+    })
   }
 
   return (
@@ -32,6 +32,7 @@ function Login({ handleLogin}) {
             E-mail
           </label>
           <input
+            disabled={onRequest}
             onChange={email.handleChangeValue}
             type="email"
             name="email"
@@ -55,6 +56,7 @@ function Login({ handleLogin}) {
             Пароль
           </label>
           <input
+            disabled={onRequest}
             onChange={password.handleChangeValue}
             type="password"
             name="password"
@@ -72,13 +74,13 @@ function Login({ handleLogin}) {
         </fieldset>
         <span className="form-container__error form-container__error_api">{apiError}</span>
         <button
-          disabled={!email.validity || !password.validity}
+          disabled={(!email.validity || !password.validity) || onRequest}
           name="loginBtn"
           type="submit"
           className={`form-container__button
-          ${password.validity && email.validity ? '' : 'form-container__button_disabled'}`
+          ${(password.validity && email.validity) && !onRequest ? '' : 'form-container__button_disabled'}`
           }>
-          Войти
+          {onRequest ? 'Вход ...':'Войти'}
         </button>
       </>
     </FormContainer>

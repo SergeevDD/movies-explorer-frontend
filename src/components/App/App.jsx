@@ -34,6 +34,7 @@ function App() {
   const navigate = useNavigate();
 
   function handleUpdateUserData({ name, email }) {
+    setOnRequest(true);
     return updateCurrentUserData({ name, email })
       .then((newUser) => {
         setCurrentUser(newUser);
@@ -42,11 +43,15 @@ function App() {
       .catch((err) => {
         addToolTip('error', `Ошибка обновленя данных пользователя: ${err.text}`);
         console.log('Ошибка: ', err.status, err.text)
-        return('При обновлении профиля произошла ошибка');
-      });
+        return ('При обновлении профиля произошла ошибка');
+      })
+      .finally(() => {
+        setOnRequest(false);
+      })
   }
 
   function handleRegister({ name, email, password }) {
+    setOnRequest(true);
     return register({ name, email, password })
       .then((user) => {
         if (user.email === email) {
@@ -58,11 +63,14 @@ function App() {
         addToolTip('error', `Ошибка регистрации пользователя: ${err.text}`);
         console.log('Ошибка: ', err.status, err.text);
         return ('При регистрации возникла ошибка');
-
-      });
+      })
+      .finally(() => {
+        setOnRequest(false);
+      })
   }
 
   function handleLogin({ email, password }) {
+    setOnRequest(true);
     return authorize({ email, password })
       .then((user) => {
         if (user.email === email) {
@@ -75,7 +83,10 @@ function App() {
         addToolTip('error', `Ошибка авторизации: ${err.text}`);
         console.log('Ошибка: ', err.status, err.text);
         return ('При авторизации возникла ошибка');
-      });
+      })
+      .finally(() => {
+        setOnRequest(false);
+      })
   }
 
   function handleLogout() {
@@ -103,7 +114,6 @@ function App() {
   }
 
   function handleAddMovie(movie) {
-    console.log(movie);
     addUserFilm(movie)
       .then((newFilm) => {
         console.log(newFilm);
@@ -196,6 +206,7 @@ function App() {
   const [userMoviesStore, setUserMovies] = useState([]);
   const [toolTips, setToolTips] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [onRequest, setOnRequest] = useState(false);
 
   useEffect(() => {
     handleCheckToken();
@@ -251,16 +262,19 @@ function App() {
                   loggedIn={isLoggedIn}
                   logout={handleLogout}
                   onSubmit={handleUpdateUserData}
+                  onRequest={onRequest}
                 />}
               />
               <Route path="/sign-up" element={
                 <Register
                   handleRegister={handleRegister}
+                  onRequest={onRequest}
                 />}
               />
               <Route path="/sign-in" element={
                 <Login
                   handleLogin={handleLogin}
+                  onRequest={onRequest}
                 />}
               />
               <Route path='/404' element={<NotFound />} />

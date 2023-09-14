@@ -1,6 +1,7 @@
+import { SHORT_FILM_LENGTH } from "./config";
 
 export function showShortFilms(films) {
-  const shortFilms = films.filter((film) => film.duration <= 40)
+  const shortFilms = films.filter((film) => film.duration <= SHORT_FILM_LENGTH)
   return shortFilms
 }
 

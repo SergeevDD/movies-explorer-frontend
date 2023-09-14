@@ -1,7 +1,8 @@
 import Api from "./Api";
+import { API_URL } from "./config";
 
 const api = new Api({
-  baseUrl: 'https://api.nomoreparties.co/',
+  baseUrl: API_URL.BEATFILM,
   headers: {
     'Content-Type': 'application/json',
   }

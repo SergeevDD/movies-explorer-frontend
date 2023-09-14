@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { RENDER_TYPE } from './config';
 
 export default function useResize() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -19,19 +20,11 @@ export default function useResize() {
 function chooseSize(width) {
   switch (true) {
     case width >= 690 && width <= 1100:
-      return {
-        quantity: 8,
-        add: 2,
-      }
+      return RENDER_TYPE.TABLET
 
-    case  width >= 1100:
-      return {
-        quantity: 12,
-        add: 3,
-      }
-    default: return {
-      quantity: 5,
-      add: 2,
-    }
+    case width >= 1100:
+      return RENDER_TYPE.DESKTOP
+
+    default: return RENDER_TYPE.MOBILE
   }
 }

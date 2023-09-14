@@ -1,8 +1,8 @@
 import FormContainer from "../FormContainer/FormContainer";
 import useInputValdator from "../../utils/useInputValidator";
-import {  useState } from "react";
+import { useState } from "react";
 
-function Register({ handleRegister }) {
+function Register({ handleRegister, onRequest }) {
 
   const name = useInputValdator('');
   const email = useInputValdator('');
@@ -16,7 +16,7 @@ function Register({ handleRegister }) {
       password: password.value,
       name: name.value
     }).then((registerResult) => {
-       if (registerResult) {
+      if (registerResult) {
         setApiError(registerResult);
       }
     })
@@ -33,6 +33,7 @@ function Register({ handleRegister }) {
             Имя
           </label>
           <input
+            disabled={onRequest}
             onChange={name.handleChangeValue}
             type="text"
             name="name"
@@ -58,6 +59,7 @@ function Register({ handleRegister }) {
             E-mail
           </label>
           <input
+            disabled={onRequest}
             onChange={email.handleChangeValue}
             type="email"
             name="email"
@@ -98,15 +100,15 @@ function Register({ handleRegister }) {
         </fieldset>
         <span className="form-container__error form-container__error_api">{apiError}</span>
         <button
-          disabled={!password.validity || !email.validity || !name.validity}
+          disabled={(!password.validity || !email.validity || !name.validity) || onRequest}
           name="registerBtn"
           type="submit"
           className=
           {`form-container__button
-          ${password.validity && email.validity && name.validity ? '' : 'form-container__button_disabled'}`
+          ${(password.validity && email.validity && name.validity) && !onRequest ? '' : 'form-container__button_disabled'}`
           }
         >
-          Зарегистрироваться
+          {onRequest ? 'Регистация ...' : 'Зарегистрироваться'}
         </button>
       </>
     </FormContainer>

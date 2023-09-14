@@ -1,6 +1,7 @@
 import Api from "./Api";
+import { API_URL } from "./config";
 
-const url = 'https://api.dmitry.sergeev.nomoreparties.co/';
+const url = API_URL.MAIN;
 const api = new Api({
   baseUrl: url,
   headers: {

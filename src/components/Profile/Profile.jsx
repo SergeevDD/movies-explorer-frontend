@@ -2,7 +2,7 @@ import { useState, useContext, useEffect, useRef } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import useInputValdator from "../../utils/useInputValidator";
 
-function Profile({ logout, onSubmit }) {
+function Profile({ logout, onSubmit, onRequest }) {
 
   const currentUser = useContext(CurrentUserContext);
   const [isEdit, setIsEdit] = useState(false);
@@ -65,7 +65,7 @@ function Profile({ logout, onSubmit }) {
           <label className="profile__input-name profile__input-name_underline">
             Имя
             <input
-              disabled={isEdit}
+              disabled={isEdit || onRequest}
               onChange={name.handleChangeValue}
               name='name'
               type="text"
@@ -86,7 +86,7 @@ function Profile({ logout, onSubmit }) {
           <label className="profile__input-name">
             E-mail
             <input
-              disabled={isEdit}
+              disabled={isEdit || onRequest}
               onChange={email.handleChangeValue}
               type="email"
               pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
@@ -111,13 +111,13 @@ function Profile({ logout, onSubmit }) {
                 {apiError}
               </span>
               <button
-                disabled={(!email.isCanged || !name.isCanged) && (!email.validity || !name.validity)}
+                disabled={((!email.isCanged || !name.isCanged) && (!email.validity || !name.validity)) || onRequest}
                 type="submit"
                 className={`profile__button-save
-                ${(email.isCanged || name.isCanged) && (name.validity && email.validity) ? '' : 'profile__button-save_disabled'}`
+                ${((email.isCanged || name.isCanged) && (name.validity && email.validity)) && !onRequest ? '' : 'profile__button-save_disabled'}`
                 }
               >
-                Сохранить
+                {onRequest ? 'Сохранение ...' : 'Сохранить'}
               </button>
             </>)
           }

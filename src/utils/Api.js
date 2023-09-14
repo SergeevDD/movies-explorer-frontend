@@ -9,8 +9,8 @@ export default class Api {
       return response.json();
     }
     return Promise.reject({
-      text: response.statusText,
-      status: response.status
+      text: response.statusText || '',
+      status: response.status || ''
     });
   }
 
