@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate} from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import Header from '../Header/Header'
 import Movies from '../Movies/Movies'
@@ -60,9 +60,16 @@ function App() {
     setOnRequest(true);
     return register({ name, email, password })
       .then((user) => {
+        addToolTip('access', `Пользователь ${user.name} успешно зарегистрирован.`);
+        return authorize({ email, password })
+          .catch((err) => {
+            addToolTip('error', `Ошибка ошибка авторизации пользователя: ${err.text}`);
+            console.log('Ошибка: ', err.status, err.text);
+          })
+      }).then((user) => {
         if (user.email === email) {
-          addToolTip('access', `Пользователь ${user.name} успешно зарегистрирован.`);
-          navigate("/sign-in", { replace: true })
+          setLoggedIn(true);
+          navigate('/movies', { replace: true })
         }
       })
       .catch(err => {
@@ -211,11 +218,6 @@ function App() {
   const [onRequest, setOnRequest] = useState(false);
 
   useEffect(() => {
-    if (location.state !== 'unknown') {
-      console.log(location);
-    } else {
-      console.log('jj', location);
-    }
     handleCheckToken();
     setIsLoading(true);
     if (isLoggedIn) {
@@ -287,7 +289,7 @@ function App() {
                 />}
               />
               <Route path='*' element={
-                <NotFound/>}
+                <NotFound />}
               />
             </Routes>
 

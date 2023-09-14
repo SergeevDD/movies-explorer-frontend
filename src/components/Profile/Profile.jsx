@@ -133,7 +133,7 @@ function Profile({ logout, onSubmit, onRequest }) {
                 Редактировать
               </button>
               <button
-                type="submit"
+                type="button"
                 className='profile__button profile__button-exit'
                 onClick={logout}
               >
