@@ -13,7 +13,7 @@
   clip-path: inset(0 0 0 0);
 }
 
-.filter:hover{
+.filter:hover {
   opacity: .8;
   cursor: pointer;
 }
@@ -24,9 +24,13 @@
   background-image: url(../../images/logo/tumboff.svg);
 }
 
-.filter__switch:checked+.filter__img {
+.filter__img_active {
   background-image: url(../../images/logo/tumbon.svg);
 }
+
+/* .filter__switch:checked+.filter__img {
+  background-image: url(../../images/logo/tumbon.svg);
+} */
 
 .filter__name {
   color: #fff;

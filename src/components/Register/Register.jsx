@@ -1,9 +1,29 @@
 import FormContainer from "../FormContainer/FormContainer";
+import useInputValdator from "../../utils/useInputValidator";
+import { useState } from "react";
 
-function Register() {
+function Register({ handleRegister, onRequest }) {
+
+  const name = useInputValdator('');
+  const email = useInputValdator('');
+  const password = useInputValdator('');
+  const [apiError, setApiError] = useState('');
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleRegister({
+      email: email.value,
+      password: password.value,
+      name: name.value
+    }).then((registerResult) => {
+      if (registerResult) {
+        setApiError(registerResult);
+      }
+    })
+  }
 
   return (
-    <FormContainer>
+    <FormContainer onSubmit={handleSubmit}>
       <>
         <fieldset className="form-container__input-field">
           <label
@@ -13,18 +33,24 @@ function Register() {
             Имя
           </label>
           <input
+            disabled={onRequest}
+            onChange={name.handleChangeValue}
             type="text"
             name="name"
+            pattern="[a-zA-Zа-яА-ЯёЁ\s\-]*"
             id="input-name"
             className="form-container__input"
             required
-            placeholder="Виталий"
+            placeholder="Введите имя"
             minLength="2"
             maxLength="30"
+            value={name.value}
           />
           <span
             className="form-container__error"
-            id="input-placename-error">
+            id="input-placename-error"
+          >
+            {name.validateMsg}
           </span>
           <label
             htmlFor="input-mail"
@@ -33,15 +59,21 @@ function Register() {
             E-mail
           </label>
           <input
+            disabled={onRequest}
+            onChange={email.handleChangeValue}
             type="email"
             name="email"
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             id="input-mail"
             className="form-container__input"
             placeholder="pochta@yandex.ru"
             required
+            value={email.value}
           />
           <span
-            className="form-container__error">
+            className="form-container__error"
+          >
+            {email.validateMsg}
           </span>
           <label
             htmlFor="input-pass"
@@ -50,6 +82,7 @@ function Register() {
             Пароль
           </label>
           <input
+            onChange={password.handleChangeValue}
             type="password"
             name="password"
             id="input-pass"
@@ -57,16 +90,25 @@ function Register() {
             placeholder="Введите пароль"
             required
             minLength="2"
+            value={password.value}
           />
           <span
-            className="form-container__error">
+            className="form-container__error"
+          >
+            {password.validateMsg}
           </span>
         </fieldset>
+        <span className="form-container__error form-container__error_api">{apiError}</span>
         <button
+          disabled={(!password.validity || !email.validity || !name.validity) || onRequest}
           name="registerBtn"
           type="submit"
-          className='form-container__button'>
-          Зарегистрироваться
+          className=
+          {`form-container__button
+          ${(password.validity && email.validity && name.validity) && !onRequest ? '' : 'form-container__button_disabled'}`
+          }
+        >
+          {onRequest ? 'Регистация ...' : 'Зарегистрироваться'}
         </button>
       </>
     </FormContainer>

@@ -1,0 +1,68 @@
+.tooltip {
+  box-shadow: 1px 1px 2px 2px #454545;
+  padding: 10px;
+  background-color: #505050;
+  font-family: 'Inter', 'Arial', sans-serif;
+  color: #fff;
+  border-radius: 10px;
+  display: flex;
+  margin: 0;
+  transition: transform 0.3s ease-out;
+  transition: max-height 0.3s ease-out;
+}
+
+.tooltip__subtitle {
+  font-size: 11px;
+  font-weight: 400;
+  margin-left: 5px;
+}
+
+.tooltip__image {
+  height: 20px;
+  aspect-ratio: 1 / 1;
+  margin-left: 3px;
+}
+
+
+
+@media screen and (min-width: 600px) {
+  .tooltip {
+    max-width: 430px;
+  }
+
+  .tooltip__subtitle {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+
+  .tooltip__subtitle {
+    font-size: 14px;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.tooltip__slideIn {
+  animation-name: slideIn;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+
+
+}
+
+.tooltip__slideOut {
+  transform: translateX(150%);
+  flex: 0;
+  max-height: 0;
+  display: none;
+}

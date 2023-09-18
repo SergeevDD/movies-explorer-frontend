@@ -14,35 +14,19 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
-.movie__button-more {
-  border-radius: 6px;
-  border: 1px solid #424242;
-  background-color: transparent;
+
+.movie__text {
   color: #fff;
-  font-size: 12px;
-  font-weight: 500;
-  min-height: 36px;
-  width: 240px;
-  padding: 0;
-  margin-top: 50px;
-  margin-bottom: 80px;
-  justify-self: center;
-  cursor: pointer;
+  font-size: 12;
+  margin: 0;
 }
 
-.movie__button-more:hover {
-  opacity: .8;
-}
 
 @media screen and (min-width: 600px) {
   .movie {
     padding-top: 70px;
     padding-left: 30px;
     padding-right: 30px;
-  }
-
-  .movie__button-more {
-    width: 320px;
   }
 
   .movie__list {
@@ -63,8 +47,4 @@
     row-gap: 58px;
   }
 
-  .movie__button-more {
-    margin-top: 76px;
-    margin-bottom: 71px;
-  }
 }
